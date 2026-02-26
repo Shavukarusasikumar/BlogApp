@@ -19,6 +19,7 @@ func SetupRoutes() *mux.Router {
 	r.HandleFunc("/post/{id}", handlers.GetPostByID).Methods("GET")
 	r.HandleFunc("/post/{id}", handlers.UpdatePostByID).Methods("PUT")
 	r.HandleFunc("/post/{id}", handlers.DeletePostByID).Methods("DELETE")
+	r.HandleFunc("/health", handlers.HealthCheck).Methods("GET")
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./static/")))
 	
 	return r

@@ -5,8 +5,9 @@ import (
 	"BlogApp/routes"
 	"BlogApp/tables"
 	"fmt"
-	"net/http"
 	"log"
+	"net/http"
+	"os"
 )
 
 func main() {
@@ -17,10 +18,14 @@ func main() {
 	tables.CreatePostTable()
 	tables.CreateCommentTable()
 
-	routes.SetupRoutes()
-	fmt.Println("Server is running on http://localhost:8080")
-	
 	router := routes.SetupRoutes()
-	log.Fatal(http.ListenAndServe(":8080", router))
-}
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	fmt.Println("Server running on port:", port)
+
+	log.Fatal(http.ListenAndServe(":"+port, router))
+}
